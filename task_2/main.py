@@ -5,7 +5,7 @@ url = "https://news.ycombinator.com/"
 response = requests.get(url)
 soup = BeautifulSoup(response.text, 'html.parser')
 data = []
-# Самый простой вариант
+
 count = 1
 for title in soup.find_all('span', class_='titleline'):
     data.append({
@@ -14,26 +14,31 @@ for title in soup.find_all('span', class_='titleline'):
         'comments':0 })
     count += 1
 
+comment_mas = []
 count1 = 1
 for comments in soup.find_all('span', class_='subline'):
     for com in comments.find_all('a'):
-        if 'comment' in com.text:
-            str = com.text
-            num = int(str.split()[0])
-            for i in data:
-                if i['id' == ]
-            count += 1
-    
+            if 'comment' in com.text:
+                str = com.text
+                num = int(str.split()[0])
+                comment_mas.append({
+                    'id': count1,
+                    'comments': num
+                })
+                count1 += 1
+            elif 'discuss' in com.text:
+                 comment_mas.append({
+                    'id': count1,
+                    'comments': 'discuss'
+                })
+                 count1 += 1
+            
 
+for com_value in comment_mas:
+        for data_value in data:
+            if com_value['id'] == data_value['id']:
+                 data_value['comments'] = com_value['comments']
 
-#for comments in soup.find_all('td', class_='subtext'):
-    #for znach in comments.find_all('span', class_='subline'):
-        #for link in znach.find_all('a'):
-            #if link.text:  #Проверяем что текст есть
-                
-                #if 'comment' in link.text.lower():
-                    
-                    #print(f"Найдены комментарии: {link.text}")
-                    
-            #print(comments.find('a').text)
-#print(data)
+for value in data:
+    print(f"{value['id']}. Название: {value['title']} |     Комменты: {value['comments']} \n")
+            
